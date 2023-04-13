@@ -177,16 +177,16 @@ function createMedalRack(){
     };
   });
 
-  const downloadButton = document.createElement('button');
+    const downloadButton = document.createElement('button');
   downloadButton.textContent = 'Download Medal Rack';
   downloadButton.addEventListener('click', () => {
-	let imgData = canvas.toDataURL("image/png");
-	let link = document.createElement("a");
-	link.href = "https://cors-anywhere.herokuapp.com/" + imgData;
-	link.download = "canvas.png";
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+    const dataURL = canvas.toDataURL('image/png');
+    const anchor = document.createElement('a');
+    anchor.href = dataURL;
+    anchor.download = 'Medal Rack.png';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
   });
   
   document.body.appendChild(downloadButton);

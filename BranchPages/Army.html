@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Army Medal Rack Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333333;
+      }
+      form {
+        margin: 0 auto;
+        width: 50%;
+        padding: 20px;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+        background-color: #ffffff;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      button[type="submit"] {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #0072c6;
+        color: #ffffff;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button[type="submit"]:hover {
+        background-color: #005eaa;
+      }
+      .center {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Army Medal Rack Generator</h1>
+    <p class="center">Please select the medals you want to include:</p>
+    <form>
+      <label>
+        <input type="checkbox" name="medal" value="Medal of Honor">
+        Medal of Honor
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Distinguished Service Cross">
+        Distinguished Service Cross
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Distinguished Service Medal">
+        Distinguished Service Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Silver Star Medal">
+        Silver Star Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Legion of Merit">
+        Legion of Merit
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Distinguished Flying Cross">
+        Distinguished Flying Cross
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Soldier's Medal">
+        Soldier's Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Bronze Star Medal">
+        Bronze Star Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Purple Heart">
+        Purple Heart
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Air Medal">
+        Air Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Army Commendation Medal">
+        Army Commendation Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Good Conduct Medal">
+        Good Conduct Medal
+      </label>
+	  <br>
+	    <label>
+        <input type="checkbox" name="medal" value="World War I Victory Medal">
+        World War I Victory Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="American Defense Service Medal">
+        American Defense Service Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="American Campaign Medal">
+        American Campaign Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="Asiatic Pacific Campaign Medal">
+        Asiatic Pacific Campaign Medal
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" name="medal" value="European African Middle Eastern Campaign Medal">
+        European African Middle Eastern Campaign Medal
+      </label>
+      <br>
+      <button type="button" onclick="createMedalRack()">Generate Medal Rack </button>
+    </form>
+	<br>
+<script>
+function createMedalRack(){
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="medal"]');
+  const checkedMedals = [];
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkedMedals.push(checkbox.value);
+    }
+  });
+
+  const canvasHeight = checkedMedals.length % 3 === 0 ? checkedMedals.length / 3 * 3 : Math.floor(checkedMedals.length / 3) * 3 + 3;
+  const canvasWidth = 39;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+  canvas.style.background = "transparent";
+
+  document.body.appendChild(canvas);
+
+  const context = canvas.getContext('2d');
+  let y = canvasHeight - 3;
+  let x = 0;
+
+  checkedMedals.forEach((medal) => {
+    const img = new Image();
+    img.src = `./QMAssets/Army/Medals/${medal}.png`;
+    img.onload = () => {
+	  img.setAttribute('crossorigin', 'anonymous');
+      context.drawImage(img, x, y);
+      x += 13;
+      if (x >= canvasWidth) {
+        x = 0;
+        y -= 13;
+      }
+    };
+  });
+
+  const downloadButton = document.createElement('button');
+  downloadButton.textContent = 'Download Medal Rack';
+  downloadButton.addEventListener('click', () => {
+	let imgData = canvas.toDataURL("image/png");
+	let link = document.createElement("a");
+	link.href = "https://cors-anywhere.herokuapp.com/" + imgData;
+	link.download = "canvas.png";
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+  });
+  
+  document.body.appendChild(downloadButton);
+}
+</script>
+
+
+  </body>
+</html>
